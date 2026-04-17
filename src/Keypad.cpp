@@ -86,6 +86,12 @@ void Keypad::scanKeys() {
 		pin_mode(rowPins[r],INPUT_PULLUP);
 	}
 
+		// --- NEW FIX FOR RP2040 ---
+        #if defined(ARDUINO_ARCH_RP2040)
+        delayMicroseconds(20);			// Settling time for high-speed RP2040 IO
+        #endif
+        // --------------------------
+
 	// bitMap stores ALL the keys that are being pressed.
 	for (byte c=0; c<sizeKpd.columns; c++) {
 		pin_mode(columnPins[c],OUTPUT);
